@@ -1,5 +1,19 @@
 #include "Table.h"
 
+Table::Table(int pWidth, int pHeight, Graphics& gfx)
+	 :
+	 gfx(gfx),
+	 width(pWidth),
+	 height(pHeight)
+{
+
+	 cells = new Cell*[pHeight];
+	 for(int i = 0; i < pWidth; ++i)
+		  cells[i] = new Cell[pWidth];
+
+	 moveSelectedCellToEmpty();
+}
+
 bool Table::isSelected(int pX, int pY)
 {
 	 int indexX = get<0>(selectedCellIndex);
@@ -8,9 +22,15 @@ bool Table::isSelected(int pX, int pY)
 	 return indexX == pX && indexY == pY;
 }
 
-void Table::setSelectedCell(int pX, int pY)
+bool Table::setSelectedCell(int pX, int pY)
 {
+	 if(!isWithinBounds(pX, pY))
+	 {
+		  return false; //selection not set
+	 }
 	 selectedCellIndex = make_tuple(pX, pY);
+	 cells[pX][pY].SetSelected(true);
+	 return true;
 }
 
 tuple<int, int> Table::getEmptyCell()
@@ -32,7 +52,7 @@ tuple<int, int> Table::getEmptyCell()
 
 void Table::drawCell(int pX, int pY, Color pColor)
 {
-	 
+
 	 //WTF..how to debug???
 	 /*string msg = "";
 	 msg += "[";
@@ -42,56 +62,66 @@ void Table::drawCell(int pX, int pY, Color pColor)
 	 msg += "] = ";
 	 msg += pColor.GetR();*/
 	 //OutputDebugStringA(L"" + msg);
-	 
+
 	 //pColor = Colors::Cyan;
 	 const int padding = 5;
 	 gfx.DrawRectDim(pX * (CELL_WIDTH + padding), pY * (CELL_WIDTH + padding), CELL_WIDTH, CELL_WIDTH, pColor);
 }
 
-Table::Table(int pWidth, int pHeight, Graphics& gfx)
-	 :
-	 gfx(gfx),
-	 width(pWidth),
-	 height(pHeight)
+bool Table::isWithinBounds(int pX, int pY)
 {
-
-	 cells = new Cell*[pWidth];
-	 for(int i = 0; i < pWidth; ++i)
-		  cells[i] = new Cell[pHeight];
+	 return pX >= 0 && pX < width && pY >= 0 && pY < height;
 }
 
-void Table::Set(char pSymbol)
+void Table::moveSelectedCellToEmpty()
+{
+	 tuple<int, int> emptyIndex = getEmptyCell();
+	 setSelectedCell(get<0>(emptyIndex), get<1>(emptyIndex));
+}
+
+
+
+void Table::Set(Color pColor)
 {
 	 int pX = get<0>(selectedCellIndex);
 	 int pY = get<1>(selectedCellIndex);
-	 cells[pX][pY].Set(pSymbol);
-	 tuple<int, int> emptyIndex = getEmptyCell();
-	 setSelectedCell(get<0>(emptyIndex), get<1>(emptyIndex));
+	 cells[pX][pY].Set(pColor);
+	 moveSelectedCellToEmpty();	 
 }
 
 void Table::MoveSelectedCell(EDirection pDirection)
 {
 	 int indexX = get<0>(selectedCellIndex);
 	 int indexY = get<1>(selectedCellIndex);
-	 //todo: check bounds
 
+	 bool selectionChanged = false;
 	 switch(pDirection)
 	 {
 	 case Up:
-		  setSelectedCell(indexX, indexY - 1);
+		  selectionChanged = setSelectedCell(indexX, indexY - 1);
 		  break;
 	 case Right:
-		  setSelectedCell(indexX + 1, indexY);
+		  selectionChanged = setSelectedCell(indexX + 1, indexY);
 		  break;
 	 case Down:
-		  setSelectedCell(indexX, indexY + 1);
+		  selectionChanged = setSelectedCell(indexX, indexY + 1);
 		  break;
 	 case Left:
-		  setSelectedCell(indexX - 1, indexY);
+		  selectionChanged = setSelectedCell(indexX - 1, indexY);
 		  break;
 	 default:
 		  break;
 	 }
+
+	/* Cell* c0 = cells[indexX, indexY];
+	 Cell* c_u = cells[indexX, indexY - 1];
+	 Cell* c_r = cells[indexX + 1, indexY];
+	 Cell* c_d = cells[indexX, indexY + 1];
+	 Cell* c_l = cells[indexX - 1, indexY];*/
+
+	 //deselect
+	 if(selectionChanged)
+		  cells[indexX][indexY].SetSelected(false);
 }
 
 void Table::Draw()
@@ -105,8 +135,15 @@ void Table::Draw()
 	 {
 		  for(int x = 0; x < height; x++)
 		  {
-				Color c = cells[x][y].GetColor();
-				drawCell(x, y, c);
+				Cell cell = cells[x][y];
+				//Cell cell = cells[x][y];
+				if(cell.IsSelected())
+				{
+					 int i = 0;
+				}
+				Color col = cell.GetColor();
+				drawCell(x, y, col);
+				//drawCell(x, y, cells[x][y].GetColor());
 
 				/*if(isSelected(x, y))
 				{

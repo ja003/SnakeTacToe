@@ -8,6 +8,7 @@ class Cell
 private:
 	 Color color;
 	 bool isEmpty;
+	 bool isSelected;
 	 //char symbol;
 public:
 	 Cell();
@@ -15,4 +16,9 @@ public:
 	 Color GetColor();
 	 //char GetSymbol();
 	 bool IsEmpty();
+	 void SetSelected(bool pSelected);
+	 bool IsSelected()
+	 {
+		  return isSelected;
+	 };
 };

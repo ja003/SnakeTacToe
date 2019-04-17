@@ -29,7 +29,8 @@ Game::Game(MainWindow& wnd)
 	 gfx(wnd),
 	 table(5, 5, gfx),
 	 player1("Adam", Colors::Red),
-	 player2("Téra", Colors::Green)
+	 player2("Téra", Colors::Green),
+	 keyReleased(true)
 {}
 
 void Game::Go()
@@ -41,7 +42,36 @@ void Game::Go()
 }
 
 void Game::UpdateModel()
-{}
+{
+	 if(!wnd.kbd.ReadKey().IsPress())
+	 {
+		  return;
+	 }
+
+	 if(wnd.kbd.KeyIsPressed(VK_UP))
+	 {
+		  table.MoveSelectedCell(Up);
+	 }
+	 else if(wnd.kbd.KeyIsPressed(VK_DOWN))
+	 {
+		  table.MoveSelectedCell(Down);
+	 }
+	 else if(wnd.kbd.KeyIsPressed(VK_LEFT))
+	 {
+		  table.MoveSelectedCell(Left);
+	 }
+	 else if(wnd.kbd.KeyIsPressed(VK_RIGHT))
+	 {
+		  table.MoveSelectedCell(Right);
+	 }
+
+	 else if(wnd.kbd.KeyIsPressed(VK_SPACE))
+	 {
+		  table.Set(player1.GetColor());
+	 }
+
+	 //if(wnd.kbd.ReadKey().IsRelease)
+}
 
 void Game::ComposeFrame()
 {

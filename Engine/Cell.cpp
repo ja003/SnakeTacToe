@@ -1,28 +1,32 @@
 #include "Cell.h"
 
-void Cell::Set(Color pColor)
-{
-	 color = pColor;
-	 isEmpty = false;
-}
-
-//char Cell::GetSymbol()
-//{
-//	 return symbol;
-//}
 
 Cell::Cell()
 	 :
 	 color(Colors::White),
-	 isEmpty(true)
+	 isEmpty(true),
+	 isSelected(false)
 {}
+
+void Cell::Set(Color pColor)
+{
+	 color = pColor;
+	 isEmpty = false;
+	 SetSelected(false);
+}
+
 
 Color Cell::GetColor()
 {
-	 return color;
+	 return isSelected ? Colors::Cyan : color;
 }
 
 bool Cell::IsEmpty()
 {
 	 return isEmpty;
+}
+
+void Cell::SetSelected(bool pSelected)
+{
+	 isSelected = pSelected;
 }
