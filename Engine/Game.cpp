@@ -30,6 +30,7 @@ Game::Game(MainWindow& wnd)
 	 table(5, 5, gfx),
 	 player1("Adam", Colors::Red),
 	 player2("Téra", Colors::Green),
+	 activePlayer(&player1),
 	 keyReleased(true)
 {}
 
@@ -67,7 +68,9 @@ void Game::UpdateModel()
 
 	 else if(wnd.kbd.KeyIsPressed(VK_SPACE))
 	 {
-		  table.Set(player1.GetColor());
+		  table.Set(activePlayer->GetColor());
+		  //swap players
+		  activePlayer = activePlayer == &player1 ? &player2 : &player1;
 	 }
 
 	 //if(wnd.kbd.ReadKey().IsRelease)

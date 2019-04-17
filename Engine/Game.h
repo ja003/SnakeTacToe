@@ -50,5 +50,6 @@ private:
 	Table table;
 	Player player1;
 	Player player2;
+	Player* activePlayer;
 	bool keyReleased;
 };
