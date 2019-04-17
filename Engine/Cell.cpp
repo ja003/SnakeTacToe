@@ -1,21 +1,28 @@
 #include "Cell.h"
 
-void Cell::Set(char pSymbol)
+void Cell::Set(Color pColor)
 {
-	 symbol = pSymbol;
+	 color = pColor;
+	 isEmpty = false;
 }
 
-char Cell::GetSymbol()
-{
-	 return symbol;
-}
+//char Cell::GetSymbol()
+//{
+//	 return symbol;
+//}
 
 Cell::Cell()
+	 :
+	 color(Colors::White),
+	 isEmpty(true)
+{}
+
+Color Cell::GetColor()
 {
-	 symbol = '_';
+	 return color;
 }
 
-bool Cell::IsSet()
+bool Cell::IsEmpty()
 {
-	 return symbol != '_';
+	 return isEmpty;
 }

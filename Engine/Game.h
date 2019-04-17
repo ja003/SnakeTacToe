@@ -23,7 +23,9 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+
 #include "Table.h"
+#include "Player.h"
 
 class Game
 {
@@ -46,5 +48,6 @@ private:
 	/********************************/
 
 	Table table;
-
+	Player player1;
+	Player player2;
 };

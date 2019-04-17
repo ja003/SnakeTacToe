@@ -19,7 +19,7 @@ tuple<int, int> Table::getEmptyCell()
 	 {
 		  for(int x = 0; x < height; x++)
 		  {
-				if(!cells[x][y].IsSet())
+				if(cells[x][y].IsEmpty())
 				{
 					 return make_tuple(x, y);
 				}
@@ -28,6 +28,24 @@ tuple<int, int> Table::getEmptyCell()
 	 }
 
 	 return tuple<int, int>();
+}
+
+void Table::drawCell(int pX, int pY, Color pColor)
+{
+	 
+	 //WTF..how to debug???
+	 /*string msg = "";
+	 msg += "[";
+	 msg += pX;
+	 msg += ",";
+	 msg += pY;
+	 msg += "] = ";
+	 msg += pColor.GetR();*/
+	 //OutputDebugStringA(L"" + msg);
+	 
+	 //pColor = Colors::Cyan;
+	 const int padding = 5;
+	 gfx.DrawRectDim(pX * (CELL_WIDTH + padding), pY * (CELL_WIDTH + padding), CELL_WIDTH, CELL_WIDTH, pColor);
 }
 
 Table::Table(int pWidth, int pHeight, Graphics& gfx)
@@ -87,14 +105,20 @@ void Table::Draw()
 	 {
 		  for(int x = 0; x < height; x++)
 		  {
-				if(isSelected(x, y))
+				Color c = cells[x][y].GetColor();
+				drawCell(x, y, c);
+
+				/*if(isSelected(x, y))
 				{
-					 cout << "*" << " ";
+					 //cout << "*" << " ";
+					 drawCell(x, y, Color(255,255,255));
 				}
 				else
 				{
-					 cout << cells[x][y].GetSymbol() << " ";
-				}
+					 //cout << cells[x][y].GetSymbol() << " ";
+					 drawCell(x,y, cells[x][y].GetColor());
+
+				}*/
 		  }
 		  cout << endl;
 	 }

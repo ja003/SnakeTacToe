@@ -1,5 +1,5 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
+/******************************************************************************************
+ *	Chili DirectX Framework Version 16.07.20											  *
  *	Game.cpp																			  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
@@ -20,27 +20,30 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "Colors.h"
 
-Game::Game( MainWindow& wnd )
-	:
-	wnd( wnd ),
-	gfx( wnd ),
-	table(5,5, gfx)
-{
-}
+
+Game::Game(MainWindow& wnd)
+	 :
+	 wnd(wnd),
+	 gfx(wnd),
+	 table(5, 5, gfx),
+	 player1("Adam", Colors::Red),
+	 player2("Téra", Colors::Green)
+{}
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
-	UpdateModel();
-	ComposeFrame();
-	gfx.EndFrame();
+	 gfx.BeginFrame();
+	 UpdateModel();
+	 ComposeFrame();
+	 gfx.EndFrame();
 }
 
 void Game::UpdateModel()
-{
-}
+{}
 
 void Game::ComposeFrame()
 {
+	 table.Draw();
 }

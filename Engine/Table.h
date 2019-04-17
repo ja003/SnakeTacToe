@@ -19,6 +19,8 @@ private:
 	 void setSelectedCell(int pX, int pY);
 	 tuple<int, int> getEmptyCell();
 	 Graphics& gfx;
+	 void drawCell(int pX, int pY, Color pColor);
+	 const int CELL_WIDTH = 20;
 
 public:
 	 Table() = default;

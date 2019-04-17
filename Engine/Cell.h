@@ -1,14 +1,18 @@
 #pragma once
 using namespace std;
+#include "Colors.h"
 
 
 class Cell
 {
 private:
-	 char symbol;
+	 Color color;
+	 bool isEmpty;
+	 //char symbol;
 public:
-	 void Set(char pSymbol);
-	 char GetSymbol();
 	 Cell();
-	 bool IsSet();
+	 void Set(Color pColor);
+	 Color GetColor();
+	 //char GetSymbol();
+	 bool IsEmpty();
 };
