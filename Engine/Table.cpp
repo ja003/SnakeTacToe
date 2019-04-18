@@ -207,7 +207,10 @@ void Table::DrawCell(int pX, int pY, Color pColor)
 	 if(targetY < 0) targetY = 0;
 	 else if(targetY + CELL_WIDTH >= Graphics::ScreenHeight) targetY = Graphics::ScreenHeight - CELL_WIDTH - 1;
 
-	 gfx.DrawRectDim(targetX, targetY, CELL_WIDTH, CELL_WIDTH, pColor);
+	 //gfx.DrawRectDim(targetX, targetY, CELL_WIDTH, CELL_WIDTH, pColor);
+	 gfx.DrawSprite(targetX, targetY, 
+		  Surface(CELL_WIDTH, CELL_WIDTH),
+		  SpriteEffect::Substitution{ pColor, pColor });
 }
 
 bool Table::IsWithinBounds(Location pLocation)

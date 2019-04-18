@@ -19,6 +19,7 @@
  *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
  ******************************************************************************************/
 #include "Game.h"
+#include "Vec2.h"
 
 Game::Game(MainWindow& wnd)
 	 :
@@ -100,5 +101,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	 font.DrawText("Becky.\nLemme smash.", Vei2(10,10), Colors::White, gfx);
 	 table.Draw();
 }

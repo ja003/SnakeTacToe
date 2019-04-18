@@ -51,9 +51,13 @@ public:
 		dword = color.dword;
 		return *this;
 	}
-	bool operator==(const Color& rhs) const
+	bool operator==( const Color& rhs ) const
 	{
-		 return dword == rhs.dword;
+		return dword == rhs.dword;
+	}
+	bool operator!=( const Color& rhs ) const
+	{
+		return !(*this == rhs);
 	}
 	constexpr unsigned char GetX() const
 	{

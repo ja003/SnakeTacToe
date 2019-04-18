@@ -29,6 +29,7 @@
 
 #include "Table.h"
 #include "Snake.h"
+#include "Font.h"
 
 class Game
 {
@@ -50,6 +51,7 @@ private:
 	/*  User Variables              */
 	/********************************/
 	FrameTimer ft;
+	Font font = "Images\\Fixedsys16x28.bmp";
 
 	Table table;
 	Snake snake1;
