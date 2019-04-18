@@ -7,4 +7,9 @@ enum EDirection
 	 Right,
 	 Down,
 	 Left,
+
+	 UpRight,
+	 DownRight,
+	 DownLeft,
+	 UpLeft
 };

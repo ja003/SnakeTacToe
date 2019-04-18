@@ -62,23 +62,10 @@ private:
 		  return count;
 	 }
 	 void SetGoodDirection();
-	 static bool AreOpposites(EDirection pDir1, EDirection pDir2)
-	 {
-		  switch(pDir1)
-		  {
-		  case Up:
-				return pDir2 == Down;
-		  case Right:
-				return pDir2 == Left;
-		  case Down:
-				return pDir2 == Up;
-		  case Left:
-				return pDir2 == Right;
-		  }
-		  return false;
-	 }
+	 
 	 bool CheckWin();
-	 int GetPointsInDirection(Location pStart, EDirection pDirection);
+	 bool CheckWinInDirection(EDirection pDirection);
+	 int GetPointsInDirection(Location pStart, EDirection pDirection, bool pRecursionFlag = false);
 	 void Win()
 	 {
 		  gameEnded = true;

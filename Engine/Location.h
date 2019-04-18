@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EDirection.h"
+#include "Math.h"
 
 class Location
 {
@@ -33,21 +34,20 @@ public:
 		  case Right: return { x + 1, y };
 		  case Down: return { x, y + 1 };
 		  case Left: return { x - 1, y };
+
+		  case UpRight: return { x + 1, y - 1 };
+		  case DownRight: return { x + 1, y + 1 };
+		  case DownLeft: return { x - 1, y + 1 };
+		  case UpLeft: return { x - 1, y - 1 };
+
 		  }
 	 }
 	 Location operator - (const EDirection dir) const
 	 {
-		  switch(dir)
-		  {
-		  case None: return { x, y };
-		  case Up: return { x, y + 1 };
-		  case Right: return { x - 1, y };
-		  case Down: return { x, y - 1 };
-		  case Left: return { x + 1, y };
-		  }
+		  return Location{ x, y } + Math::GetOpposite(dir);
 	 }
 
-	 Location operator += (const EDirection dir)
+	 Location& operator += (const EDirection dir)
 	 {
 		  switch(dir)
 		  {
@@ -64,12 +64,35 @@ public:
 		  case Left:
 				x -= 1;
 				break;
+
+		  case UpRight:
+				x += 1;
+				y -= 1;
+				break;
+		  case DownRight:
+				x += 1;
+				y += 1;
+				break;
+		  case DownLeft:
+				x -= 1;
+				y += 1;
+				break;
+		  case UpLeft:
+				x -= 1;
+				y -= 1;
+				break;
 		  }
-		  return { x, y };
+		  return *this;
 
 	 }
-	 Location operator -= (const EDirection dir)
+	 Location& operator -= (const EDirection dir)
 	 {
+		  //todo: figure this shit out
+		  /*Location* l = this;
+		  l += Math::GetOpposite(dir);
+		  return l;
+		  &(this) += Math::GetOpposite(dir);*/
+
 		  switch(dir)
 		  {
 		  case None:
@@ -85,9 +108,26 @@ public:
 		  case Left:
 				x += 1;
 				break;
-		  }
-		  return { x, y };
 
+		  case UpRight:
+				x -= 1;
+				y += 1;
+				break;
+		  case DownRight:
+				x -= 1;
+				y -= 1;
+				break;
+		  case DownLeft:
+				x += 1;
+				y -= 1;
+				break;
+		  case UpLeft:
+				x += 1;
+				y += 1;
+				break;
+		  }
+		  return *this;
+		  //return { x,y };
 	 }
 
 	 int x;

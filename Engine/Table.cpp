@@ -1,4 +1,5 @@
 #include "Table.h"
+#include "Math.h"
 #include <vector>
 
 Table::Table(int pWidth, int pHeight, int pWinPointsCount, Graphics& gfx)
@@ -91,7 +92,7 @@ void Table::SetActiveSnake(Snake * pSnake)
 //Dont set direction opposite to the last one that snake made
 void Table::SetMoveDirection(EDirection pDirection)
 {
-	 if(!AreOpposites(activeSnake->GetLastMoveDirection(), pDirection))
+	 if(!Math::AreOpposites(activeSnake->GetLastMoveDirection(), pDirection))
 		  moveDirection = pDirection;
 }
 
@@ -102,26 +103,29 @@ void Table::SetMoveDirection(EDirection pDirection)
 //Has to be called right after symbol is added and snakes hasnt been swapped yet.
 bool Table::CheckWin()
 {
+	 if(CheckWinInDirection(UpRight) || CheckWinInDirection(Right) ||
+		  CheckWinInDirection(DownRight) || CheckWinInDirection(Down))
+		  return true;
+
+	 return false;
+}
+
+bool Table::CheckWinInDirection(EDirection pDirection)
+{
 	 Location head = activeSnake->GetHead();
-	 int points = GetPointsInDirection(head, Right);
+	 int points = GetPointsInDirection(head, pDirection);
 	 if(points >= winPointsCount)
 	 {
 		  Win();
 		  return true;
 	 }
-	 points = GetPointsInDirection(head, Up);
-	 if(points >= winPointsCount)
-	 {
-		  Win();
-		  return true;
-	 }
-	 //todo: check UpRight + DownRight
 	 return false;
 }
 
 //Counts number of cells in given and opposite direction from
-//given starting cell belonging to active snake
-int Table::GetPointsInDirection(Location pStart, EDirection pDirection)
+//given starting cell belonging to active snake.
+//Opposite direction os called recursively => pRecursionFlag = true
+int Table::GetPointsInDirection(Location pStart, EDirection pDirection, bool pRecursionFlag)
 {
 	 int points = 0;
 	 Location tmpLoc = pStart;
@@ -133,16 +137,9 @@ int Table::GetPointsInDirection(Location pStart, EDirection pDirection)
 		  tmpLoc += pDirection;
 		  tmpCell = GetCell(tmpLoc);
 	 }
-	 //now in opposite direction
-	 tmpLoc = pStart - pDirection;
-	 while(tmpCell != nullptr && tmpCell->BelongsToSnake(activeSnake))
-	 {
-		  points++;
 
-		  tmpLoc -= pDirection;
-		  tmpCell = GetCell(tmpLoc);
-	 }
-	 return points;
+	 //dont count the starting cell twice (-1)
+	 return points + (pRecursionFlag ? -1 : GetPointsInDirection(pStart, Math::GetOpposite(pDirection), true));
 }
 
 //Set MoveDirection so the next cell is empty.
