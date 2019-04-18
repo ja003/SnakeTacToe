@@ -29,10 +29,15 @@ Location Snake::GetHead()
 
 void Snake::Activate(Location pStartPosition)
 {
-	 segments.push_back(pStartPosition);
+	 for(int i = 0; i < segmentCount; i++)
+	 {
+		  segments.push_back(pStartPosition);
+	 }
 }
 
-void Snake::Deactivate()
+std::vector<Location> Snake::Deactivate()
 {
-	 segments.clear();
+	 std::vector<Location> copy(segments);
+	 segments.clear(); 
+	 return copy;
 }

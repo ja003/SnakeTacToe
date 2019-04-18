@@ -29,6 +29,10 @@ public:
 		  return oponent;
 	 }
 	 void Activate(Location pStartPosition);
-	 void Deactivate();
+	 std::vector<Location> Deactivate();
+	 void IncreaseSegmentCount()
+	 {
+		  segmentCount++;
+	 }
 };
 

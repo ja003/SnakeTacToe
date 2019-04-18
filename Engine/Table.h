@@ -24,11 +24,7 @@ private:
 	 //void moveSelectedCellToEmpty();
 	 Snake* activeSnake;
 	 void swapSnakes();
-	 Cell* getCell(Location pLocation)
-	 {
-		  //check!
-		  return &cells[pLocation.x][pLocation.y];
-	 }
+	 
 
 public:
 	 Table() = default;
@@ -40,4 +36,10 @@ public:
 	 void SetActiveSnake(Snake* pSnake);
 
 	 EDirection MoveDirection = Right;
+
+	 Cell* getCell(Location pLocation)
+	 {
+		  //check!
+		  return &cells[pLocation.x][pLocation.y];
+	 }
 };

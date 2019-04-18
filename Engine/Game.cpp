@@ -44,10 +44,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	 /*if(!wnd.kbd.ReadKey().IsPress())
-	 {
-		  return;
-	 }*/
+	 
 	 const float dt = ft.Mark();
 	 gameTime += dt;
 	 timeToNextStep -= dt;
@@ -56,6 +53,11 @@ void Game::UpdateModel()
 		  timeToNextStep = STEP_FREQUENCY;
 		  //step
 		  table.Move();
+	 }
+
+	 if(!wnd.kbd.ReadKey().IsPress())
+	 {
+		  return;
 	 }
 
 	 if(wnd.kbd.KeyIsPressed(VK_UP))

@@ -55,6 +55,6 @@ private:
 	Snake snake1;
 	Snake snake2;
 	float gameTime = 0;
-	const float STEP_FREQUENCY = 1;
+	const float STEP_FREQUENCY = .5f;
 	float timeToNextStep = STEP_FREQUENCY;
 };

@@ -55,8 +55,14 @@ bool Table::isWithinBounds(Location pLocation)
 
 void Table::swapSnakes()
 {
-	 activeSnake->Deactivate();
-	 activeSnake == activeSnake->GetOponent();
+	 std::vector<Location> snakeSegments = activeSnake->Deactivate();
+	 for(auto s : snakeSegments)
+	 {
+		  if(isWithinBounds(s)) //if snake went outside of borders, its head is OOB -> no need to set empty
+				getCell(s)->SetEmpty();
+	 }
+
+	 activeSnake = activeSnake->GetOponent();
 	 activeSnake->Activate(getEmptyCell());
 }
 
@@ -65,6 +71,7 @@ void Table::MakeSymbol()
 {
 	 Location snakeHead = activeSnake->GetHead();
 	 cells[snakeHead.x][snakeHead.y].Set(Cell::Snake, activeSnake->GetColor());
+	 activeSnake->IncreaseSegmentCount();
 	 swapSnakes();
 }
 
