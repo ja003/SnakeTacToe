@@ -37,8 +37,10 @@ Game::Game(MainWindow& wnd)
 
 void Game::Go()
 {
-	 //prevent multiple press + check for PAUSE key
-	 if(wnd.kbd.ReadKey().IsPress() && wnd.kbd.KeyIsPressed(VK_DELETE))
+	 //prevent multiple press 
+	 isKeyPress = wnd.kbd.ReadKey().IsPress() ;
+	 //check for PAUSE key	 
+	 if(isKeyPress && wnd.kbd.KeyIsPressed(VK_DELETE))
 	 {
 		  isPaused = !isPaused;
 	 }
@@ -62,11 +64,11 @@ void Game::UpdateModel()
 		  table.Move();
 	 }
 
-	 //wtf, suddenly not working wuth this
-	 /*if(!wnd.kbd.ReadKey().IsPress())
+	 //dont do key action if key not pressed
+	 if(!isKeyPress)
 	 {
 			return;
-	 }*/
+	 }
 
 
 	 if(wnd.kbd.KeyIsPressed(VK_UP))
