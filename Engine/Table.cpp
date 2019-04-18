@@ -78,9 +78,32 @@ void Table::SetActiveSnake(Snake * pSnake)
 	 activeSnake->Activate(GetEmptyCell());
 	 //set head visible in next frame
 	 GetCell(activeSnake->GetHead())->Set(Cell::Snake, activeSnake->GetColor());
+
+	 SetGoodDirection();
 }
 
 //PRIVATE
+
+//Set MoveDirection so the next cell is empty.
+//start with current MoveDirection value
+void Table::SetGoodDirection()
+{
+	 Location headLoc = activeSnake->GetHead();
+
+	 EDirection dir;
+	 for(int i = 0; i < 4; i++)
+	 {
+		  //iterate though all 4 directions, skip None (+1), start with current (-1)
+		  dir = EDirection((int(MoveDirection) + i - 1) % 4 + 1);
+		  Cell* cellInDir = GetCell(headLoc + dir);
+		  if(cellInDir != nullptr && cellInDir->IsEmpty())
+		  {
+				MoveDirection = dir;
+				return;
+		  }
+	 }
+	 //no good direction found...too bad, MoveDirection remains the same
+}
 
 Location Table::GetEmptyCell()
 {

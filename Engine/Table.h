@@ -37,10 +37,8 @@ private:
 	 void SwapSnakes();
 	 Cell* GetCell(Location pLocation)
 	 {
-		  assert(pLocation.x >= 0);
-		  assert(pLocation.x < width);
-		  assert(pLocation.y >= 0);
-		  assert(pLocation.y < height);
+		  if(!IsWithinBounds(pLocation))
+				return nullptr;
 
 		  //check!
 		  return &cells[pLocation.x][pLocation.y];
@@ -59,4 +57,5 @@ private:
 		  }
 		  return count;
 	 }
+	 void SetGoodDirection();
 };
