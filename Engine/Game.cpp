@@ -55,6 +55,7 @@ void Game::UpdateModel()
 		  table.Move();
 	 }
 
+	 //prevent multiple press
 	 if(!wnd.kbd.ReadKey().IsPress())
 	 {
 		  return;

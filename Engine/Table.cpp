@@ -62,8 +62,7 @@ void Table::swapSnakes()
 				getCell(s)->SetEmpty();
 	 }
 
-	 activeSnake = activeSnake->GetOponent();
-	 activeSnake->Activate(getEmptyCell());
+	 SetActiveSnake(activeSnake->GetOponent());
 }
 
 
@@ -109,4 +108,7 @@ void Table::Move()
 void Table::SetActiveSnake(Snake * pSnake)
 {
 	 activeSnake = pSnake;
+	 activeSnake->Activate(getEmptyCell());
+	 //set head visible in next frame
+	 getCell(activeSnake->GetHead())->Set(Cell::Snake, activeSnake->GetColor());
 }
