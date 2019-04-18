@@ -26,7 +26,8 @@ Game::Game(MainWindow& wnd)
 	 gfx(wnd),
 	 table(5, 5, gfx),
 	 snake1("Adam", Colors::Red),
-	 snake2("Téra", Colors::Green)
+	 snake2("Téra", Colors::Green),
+	 isPaused(false)
 {
 	 snake1.SetOponent(&snake2);
 	 snake2.SetOponent(&snake1);
@@ -36,6 +37,14 @@ Game::Game(MainWindow& wnd)
 
 void Game::Go()
 {
+	 //prevent multiple press + check for PAUSE key
+	 if(wnd.kbd.ReadKey().IsPress() && wnd.kbd.KeyIsPressed(VK_DELETE))
+	 {
+		  isPaused = !isPaused;
+	 }
+	 if(isPaused)
+		  return;
+
 	 gfx.BeginFrame();
 	 UpdateModel();
 	 ComposeFrame();
@@ -44,22 +53,21 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	 
 	 const float dt = ft.Mark();
 	 gameTime += dt;
 	 timeToNextStep -= dt;
 	 if(timeToNextStep < 0)
 	 {
 		  timeToNextStep = STEP_FREQUENCY;
-		  //step
 		  table.Move();
 	 }
 
-	 //prevent multiple press
-	 if(!wnd.kbd.ReadKey().IsPress())
+	 //wtf, suddenly not working wuth this
+	 /*if(!wnd.kbd.ReadKey().IsPress())
 	 {
-		  return;
-	 }
+			return;
+	 }*/
+
 
 	 if(wnd.kbd.KeyIsPressed(VK_UP))
 	 {

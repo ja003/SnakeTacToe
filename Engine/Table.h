@@ -45,4 +45,18 @@ private:
 		  //check!
 		  return &cells[pLocation.x][pLocation.y];
 	 }
+	 int GetNonEmptyCellCount()
+	 {
+		  int count = 0;
+		  for(int y = 0; y < width; y++)
+		  {
+				for(int x = 0; x < height; x++)
+				{
+					 Cell* cell = &cells[x][y];
+					 if(!cell->IsEmpty())
+						  count++;
+				}
+		  }
+		  return count;
+	 }
 };

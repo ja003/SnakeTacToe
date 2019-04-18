@@ -28,6 +28,10 @@ public:
 	 {
 		  segmentCount++;
 	 }
+	 int GetSegmentCount()
+	 {
+		  return segmentCount;
+	 }
 private:
 	 std::string name;
 	 Color color;

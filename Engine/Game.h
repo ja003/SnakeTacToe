@@ -57,4 +57,5 @@ private:
 	float gameTime = 0;
 	const float STEP_FREQUENCY = .5f;
 	float timeToNextStep = STEP_FREQUENCY;
+	bool isPaused;
 };

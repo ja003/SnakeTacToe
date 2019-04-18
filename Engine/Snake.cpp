@@ -5,7 +5,6 @@ Snake::Snake(std::string pName, Color pColor)
 	 name = pName;
 	 color= pColor;
 	 segmentCount = 1;	 
-	 segments.push_back(Location{0,0});
 }
 
 Color Snake::GetColor()

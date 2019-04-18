@@ -1,4 +1,5 @@
 #include "Table.h"
+#include <vector>
 
 Table::Table(int pWidth, int pHeight, Graphics& gfx)
 	 :
@@ -77,14 +78,22 @@ void Table::MakeSymbol()
 
 void Table::Draw()
 {
+	 std::vector<Cell*> nonEmptyCells;
 	 for(int y = 0; y < width; y++)
 	 {
 		  for(int x = 0; x < height; x++)
 		  {
 				Cell* cell = &cells[x][y];
+				if(!cell->IsEmpty())
+					 nonEmptyCells.push_back(cell);
+
 				Color col = cell->GetColor();
 				DrawCell(x, y, col);
 		  }
+	 }
+	 if(nonEmptyCells.size() > 1)
+	 {
+		  int count = nonEmptyCells.size();
 	 }
 }
 
@@ -94,15 +103,28 @@ void Table::Move()
 	 Cell* oldSnakeTail = GetCell(locOldTail);
 	 oldSnakeTail->SetEmpty();
 
+	 //check bounds
 	 Location locHead = activeSnake->GetHead();
+	 if(!IsWithinBounds(locHead))
+	 {
+		  SwapSnakes();
+		  return;
+	 }
+	 //check collision
 	 Cell* newSnakeHead = GetCell(locHead);
-	 //first check bounds or OOR exception
-	 if(!IsWithinBounds(locHead) || newSnakeHead->IsObstacle())
+	 if(newSnakeHead->IsObstacle())
 	 {
 		  SwapSnakes();
 		  return;
 	 }
 	 newSnakeHead->Set(Cell::Snake, activeSnake->GetColor());
+	 
+	 int necc = GetNonEmptyCellCount();
+	 int sc = activeSnake->GetSegmentCount();
+	 if(necc > sc)
+	 {
+		  int c = 0;
+	 }
 }
 
 void Table::SetActiveSnake(Snake * pSnake)
