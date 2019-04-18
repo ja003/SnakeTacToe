@@ -151,7 +151,11 @@ void Table::SetGoodDirection()
 	 EDirection dir;
 	 for(int i = 0; i < 4; i++)
 	 {
-		  //iterate though all 4 directions, skip None (+1), start with current (-1)
+		  //WARNING: this solution depends on static order of EDirection elements:
+		  //- None, Up, Right, Down, Left, ...
+		  //If the order is changed, behaviour will be different
+
+		  //iterate though 4 directions (not 8!), skip None (+1), start with current (-1)
 		  dir = EDirection((int(moveDirection) + i - 1) % 4 + 1);
 		  Cell* cellInDir = GetCell(headLoc + dir);
 		  if(cellInDir != nullptr && cellInDir->IsEmpty())
