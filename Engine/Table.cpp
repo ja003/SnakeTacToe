@@ -13,6 +13,74 @@ Table::Table(int pWidth, int pHeight, Graphics& gfx)
 		  cells[i] = new Cell[pWidth];
 }
 
+void Table::MakeSymbol()
+{
+	 Location snakeHead = activeSnake->GetHead();
+	 cells[snakeHead.x][snakeHead.y].Set(Cell::Symbol, activeSnake->GetColor());
+	 activeSnake->IncreaseSegmentCount();
+	 SwapSnakes();
+}
+
+void Table::Draw()
+{
+	 std::vector<Cell*> nonEmptyCells;
+	 for(int y = 0; y < width; y++)
+	 {
+		  for(int x = 0; x < height; x++)
+		  {
+				Cell* cell = &cells[x][y];
+				if(!cell->IsEmpty())
+					 nonEmptyCells.push_back(cell);
+
+				Color col = cell->GetColor();
+				DrawCell(x, y, col);
+		  }
+	 }
+	 if(nonEmptyCells.size() > 1)
+	 {
+		  int count = nonEmptyCells.size();
+	 }
+}
+
+void Table::Move()
+{
+	 Location locOldTail = activeSnake->Move(MoveDirection);
+	 Cell* oldSnakeTail = GetCell(locOldTail);
+	 oldSnakeTail->SetEmpty();
+
+	 //check bounds
+	 Location locHead = activeSnake->GetHead();
+	 if(!IsWithinBounds(locHead))
+	 {
+		  SwapSnakes();
+		  return;
+	 }
+	 //check collision
+	 Cell* newSnakeHead = GetCell(locHead);
+	 if(newSnakeHead->IsObstacle())
+	 {
+		  SwapSnakes();
+		  return;
+	 }
+	 newSnakeHead->Set(Cell::Snake, activeSnake->GetColor());
+
+	 int necc = GetNonEmptyCellCount();
+	 int sc = activeSnake->GetSegmentCount();
+	 if(necc > sc)
+	 {
+		  int c = 0;
+	 }
+}
+
+void Table::SetActiveSnake(Snake * pSnake)
+{
+	 activeSnake = pSnake;
+	 activeSnake->Activate(GetEmptyCell());
+	 //set head visible in next frame
+	 GetCell(activeSnake->GetHead())->Set(Cell::Snake, activeSnake->GetColor());
+}
+
+//PRIVATE
 
 Location Table::GetEmptyCell()
 {
@@ -67,70 +135,3 @@ void Table::SwapSnakes()
 }
 
 
-void Table::MakeSymbol()
-{
-	 Location snakeHead = activeSnake->GetHead();
-	 cells[snakeHead.x][snakeHead.y].Set(Cell::Snake, activeSnake->GetColor());
-	 activeSnake->IncreaseSegmentCount();
-	 SwapSnakes();
-}
-
-
-void Table::Draw()
-{
-	 std::vector<Cell*> nonEmptyCells;
-	 for(int y = 0; y < width; y++)
-	 {
-		  for(int x = 0; x < height; x++)
-		  {
-				Cell* cell = &cells[x][y];
-				if(!cell->IsEmpty())
-					 nonEmptyCells.push_back(cell);
-
-				Color col = cell->GetColor();
-				DrawCell(x, y, col);
-		  }
-	 }
-	 if(nonEmptyCells.size() > 1)
-	 {
-		  int count = nonEmptyCells.size();
-	 }
-}
-
-void Table::Move()
-{
-	 Location locOldTail = activeSnake->Move(MoveDirection);
-	 Cell* oldSnakeTail = GetCell(locOldTail);
-	 oldSnakeTail->SetEmpty();
-
-	 //check bounds
-	 Location locHead = activeSnake->GetHead();
-	 if(!IsWithinBounds(locHead))
-	 {
-		  SwapSnakes();
-		  return;
-	 }
-	 //check collision
-	 Cell* newSnakeHead = GetCell(locHead);
-	 if(newSnakeHead->IsObstacle())
-	 {
-		  SwapSnakes();
-		  return;
-	 }
-	 newSnakeHead->Set(Cell::Snake, activeSnake->GetColor());
-	 
-	 int necc = GetNonEmptyCellCount();
-	 int sc = activeSnake->GetSegmentCount();
-	 if(necc > sc)
-	 {
-		  int c = 0;
-	 }
-}
-
-void Table::SetActiveSnake(Snake * pSnake)
-{
-	 activeSnake = pSnake;
-	 activeSnake->Activate(GetEmptyCell());
-	 //set head visible in next frame
-	 GetCell(activeSnake->GetHead())->Set(Cell::Snake, activeSnake->GetColor());
-}

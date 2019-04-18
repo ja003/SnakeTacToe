@@ -14,9 +14,10 @@ public:
 public:
 	 Cell();
 	 void Set(EType pType, Color pColor);
-	 void SetEmpty()
+	 void SetEmpty(bool pForce = false)
 	 {
-		  Set(Empty, Colors::White);
+		  if(pForce || type != Symbol)
+				Set(Empty, Colors::White);
 	 }
 	 Color GetColor();
 	 bool IsObstacle();
