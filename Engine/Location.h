@@ -35,6 +35,18 @@ public:
 		  case Left: return { x - 1, y };
 		  }
 	 }
+	 Location operator - (const EDirection dir) const
+	 {
+		  switch(dir)
+		  {
+		  case None: return { x, y };
+		  case Up: return { x, y + 1 };
+		  case Right: return { x - 1, y };
+		  case Down: return { x, y - 1 };
+		  case Left: return { x + 1, y };
+		  }
+	 }
+
 	 Location operator += (const EDirection dir)
 	 {
 		  switch(dir)
@@ -51,6 +63,27 @@ public:
 				break;
 		  case Left:
 				x -= 1;
+				break;
+		  }
+		  return { x, y };
+
+	 }
+	 Location operator -= (const EDirection dir)
+	 {
+		  switch(dir)
+		  {
+		  case None:
+		  case Up:
+				y += 1;
+				break;
+		  case Right:
+				x -= 1;
+				break;
+		  case Down:
+				y -= 1;
+				break;
+		  case Left:
+				x += 1;
 				break;
 		  }
 		  return { x, y };

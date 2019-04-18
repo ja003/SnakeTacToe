@@ -1,11 +1,12 @@
 #include "Table.h"
 #include <vector>
 
-Table::Table(int pWidth, int pHeight, Graphics& gfx)
+Table::Table(int pWidth, int pHeight, int pWinPointsCount, Graphics& gfx)
 	 :
 	 gfx(gfx),
 	 width(pWidth),
-	 height(pHeight)
+	 height(pHeight),
+	 winPointsCount(pWinPointsCount)
 {
 
 	 cells = new Cell*[pHeight];
@@ -18,6 +19,8 @@ void Table::MakeSymbol()
 	 Location snakeHead = activeSnake->GetHead();
 	 cells[snakeHead.x][snakeHead.y].Set(Cell::Symbol, activeSnake->GetColor());
 	 activeSnake->IncreaseSegmentCount();
+	 if(CheckWin())
+		  return;
 	 SwapSnakes();
 }
 
@@ -44,6 +47,9 @@ void Table::Draw()
 
 void Table::Move()
 {
+	 if(gameEnded)
+		  return;
+
 	 Location locOldTail = activeSnake->Move(moveDirection);
 	 Cell* oldSnakeTail = GetCell(locOldTail);
 	 oldSnakeTail->SetEmpty();
@@ -62,7 +68,7 @@ void Table::Move()
 		  SwapSnakes();
 		  return;
 	 }
-	 newSnakeHead->Set(Cell::Snake, activeSnake->GetColor());
+	 newSnakeHead->Set(Cell::SnakeSegment, activeSnake->GetColor());
 
 	 int necc = GetNonEmptyCellCount();
 	 int sc = activeSnake->GetSegmentCount();
@@ -77,7 +83,7 @@ void Table::SetActiveSnake(Snake * pSnake)
 	 activeSnake = pSnake;
 	 activeSnake->Activate(GetEmptyCell());
 	 //set head visible in next frame
-	 GetCell(activeSnake->GetHead())->Set(Cell::Snake, activeSnake->GetColor());
+	 GetCell(activeSnake->GetHead())->Set(Cell::SnakeSegment, activeSnake->GetColor());
 
 	 SetGoodDirection();
 }
@@ -90,6 +96,54 @@ void Table::SetMoveDirection(EDirection pDirection)
 }
 
 //PRIVATE
+
+//Check if there is enough same symbols connected to the last added symbol (activeSneak's head)
+//in one direction.
+//Has to be called right after symbol is added and snakes hasnt been swapped yet.
+bool Table::CheckWin()
+{
+	 Location head = activeSnake->GetHead();
+	 int points = GetPointsInDirection(head, Right);
+	 if(points >= winPointsCount)
+	 {
+		  Win();
+		  return true;
+	 }
+	 points = GetPointsInDirection(head, Up);
+	 if(points >= winPointsCount)
+	 {
+		  Win();
+		  return true;
+	 }
+	 //todo: check UpRight + DownRight
+	 return false;
+}
+
+//Counts number of cells in given and opposite direction from
+//given starting cell belonging to active snake
+int Table::GetPointsInDirection(Location pStart, EDirection pDirection)
+{
+	 int points = 0;
+	 Location tmpLoc = pStart;
+	 Cell* tmpCell = GetCell(tmpLoc);
+	 while(tmpCell != nullptr && tmpCell->BelongsToSnake(activeSnake))
+	 {
+		  points++;
+
+		  tmpLoc += pDirection;
+		  tmpCell = GetCell(tmpLoc);
+	 }
+	 //now in opposite direction
+	 tmpLoc = pStart - pDirection;
+	 while(tmpCell != nullptr && tmpCell->BelongsToSnake(activeSnake))
+	 {
+		  points++;
+
+		  tmpLoc -= pDirection;
+		  tmpCell = GetCell(tmpLoc);
+	 }
+	 return points;
+}
 
 //Set MoveDirection so the next cell is empty.
 //start with current MoveDirection value

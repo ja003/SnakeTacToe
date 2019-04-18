@@ -13,22 +13,27 @@ class Table
 public:
 public:
 	 Table() = default;
-	 Table(int pWidth, int pHeight, Graphics& gfx);
+	 Table(int pWidth, int pHeight, int pWinPointsCount, Graphics& gfx);
 	 //void Init(int pWidth, int pHeight);
 	 void MakeSymbol();
 	 void Draw();
 	 void Move();
 	 void SetActiveSnake(Snake* pSnake);
 	 void SetMoveDirection(EDirection pDirection);
+	 bool GetGameEnded()
+	 {
+		  return gameEnded;
+	 }
 private:
 	 EDirection moveDirection = Right;
 	 int width;
 	 int height;
+	 int winPointsCount;
 	 Cell** cells; //https://stackoverflow.com/questions/936687/how-do-i-declare-a-2d-array-in-c-using-new
 	 Graphics& gfx;
 	 const int CELL_WIDTH = 20;
 	 Snake* activeSnake;
-
+	 bool gameEnded = false;
 private:
 	 Location GetEmptyCell();
 	 void DrawCell(int pX, int pY, Color pColor);
@@ -71,5 +76,11 @@ private:
 				return pDir2 == Right;
 		  }
 		  return false;
+	 }
+	 bool CheckWin();
+	 int GetPointsInDirection(Location pStart, EDirection pDirection);
+	 void Win()
+	 {
+		  gameEnded = true;
 	 }
 };

@@ -6,5 +6,5 @@ enum EDirection
 	 Up,
 	 Right,
 	 Down,
-	 Left
+	 Left,
 };

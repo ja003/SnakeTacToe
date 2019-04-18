@@ -21,5 +21,10 @@ Color Cell::GetColor()
 
 bool Cell::IsObstacle()
 {
-	 return type == Snake || type == Symbol;
+	 return type == SnakeSegment || type == Symbol;
+}
+
+bool Cell::BelongsToSnake(Snake * pSnake)
+{
+	 return type == Symbol && color == pSnake->GetColor();
 }

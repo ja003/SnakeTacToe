@@ -1,5 +1,6 @@
 #pragma once
 #include "Colors.h"
+#include "Snake.h"
 
 
 class Cell
@@ -9,7 +10,7 @@ public:
 	 {
 		  Empty,
 		  Symbol,
-		  Snake
+		  SnakeSegment
 	 };
 public:
 	 Cell();
@@ -25,6 +26,7 @@ public:
 	 {
 		  return type == Empty;
 	 }
+	 bool BelongsToSnake(Snake* pSnake);
 
 private:
 	 Color color;

@@ -24,7 +24,7 @@ Game::Game(MainWindow& wnd)
 	 :
 	 wnd(wnd),
 	 gfx(wnd),
-	 table(5, 5, gfx),
+	 table(5, 5, 2, gfx),
 	 snake1("Adam", Colors::Red),
 	 snake2("Téra", Colors::Green),
 	 isPaused(false)
@@ -37,6 +37,9 @@ Game::Game(MainWindow& wnd)
 
 void Game::Go()
 {
+	 if(table.GetGameEnded())
+		  return;
+
 	 //prevent multiple press 
 	 isKeyPress = wnd.kbd.ReadKey().IsPress() ;
 	 //check for PAUSE key	 
