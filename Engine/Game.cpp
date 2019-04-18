@@ -28,9 +28,9 @@ Game::Game(MainWindow& wnd)
 	 wnd(wnd),
 	 gfx(wnd),
 	 table(5, 5, gfx),
-	 player1("Adam", Colors::Red),
-	 player2("Téra", Colors::Green),
-	 activePlayer(&player1),
+	 snake1("Adam", Colors::Red),
+	 snake2("Téra", Colors::Green),
+	 activeSnake(&snake1),
 	 keyReleased(true)
 {}
 
@@ -68,9 +68,9 @@ void Game::UpdateModel()
 
 	 else if(wnd.kbd.KeyIsPressed(VK_SPACE))
 	 {
-		  table.Set(activePlayer->GetColor());
+		  table.Set(activeSnake->GetColor());
 		  //swap players
-		  activePlayer = activePlayer == &player1 ? &player2 : &player1;
+		  activeSnake = activeSnake == &snake1 ? &snake2 : &snake1;
 	 }
 
 	 //if(wnd.kbd.ReadKey().IsRelease)

@@ -5,20 +5,20 @@ using namespace std;
 
 class Cell
 {
+public:
+	 enum EType
+	 {
+		  Empty,
+		  Symbol,
+		  Snake
+	 };
+
 private:
 	 Color color;
-	 bool isEmpty;
-	 bool isSelected;
-	 //char symbol;
+	 EType type;
 public:
 	 Cell();
-	 void Set(Color pColor);
+	 void Set(EType pType, Color pColor);
 	 Color GetColor();
-	 //char GetSymbol();
-	 bool IsEmpty();
-	 void SetSelected(bool pSelected);
-	 bool IsSelected()
-	 {
-		  return isSelected;
-	 };
+	 bool IsObstacle();
 };

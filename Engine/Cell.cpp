@@ -4,29 +4,22 @@
 Cell::Cell()
 	 :
 	 color(Colors::White),
-	 isEmpty(true),
-	 isSelected(false)
+	 type(Empty)
 {}
 
-void Cell::Set(Color pColor)
+void Cell::Set(EType pType, Color pColor)
 {
 	 color = pColor;
-	 isEmpty = false;
-	 SetSelected(false);
+	 type = pType;
 }
 
 
 Color Cell::GetColor()
 {
-	 return isSelected ? Colors::Cyan : color;
+	 return color;
 }
 
-bool Cell::IsEmpty()
+bool Cell::IsObstacle()
 {
-	 return isEmpty;
-}
-
-void Cell::SetSelected(bool pSelected)
-{
-	 isSelected = pSelected;
+	 return type == Snake || type == Symbol;
 }

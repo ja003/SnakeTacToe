@@ -1,7 +1,7 @@
 #pragma once
 #include "Cell.h"
 #include "EDirection.h"
-#include<tuple>
+#include <tuple>
 #include <iostream>
 #include "Graphics.h"
 

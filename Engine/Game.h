@@ -25,7 +25,7 @@
 #include "Graphics.h"
 
 #include "Table.h"
-#include "Player.h"
+#include "Snake.h"
 
 class Game
 {
@@ -48,8 +48,8 @@ private:
 	/********************************/
 
 	Table table;
-	Player player1;
-	Player player2;
-	Player* activePlayer;
+	Snake snake1;
+	Snake snake2;
+	Snake* activeSnake;
 	bool keyReleased;
 };
