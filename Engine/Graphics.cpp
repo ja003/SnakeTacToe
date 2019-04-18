@@ -310,6 +310,10 @@ void Graphics::BeginFrame()
 void Graphics::PutPixel( int x,int y,Color c )
 {
 	assert( x >= 0 );
+	if(!(x < int(Graphics::ScreenWidth)))
+	{
+		 x = 0;
+	}
 	assert( x < int( Graphics::ScreenWidth ) );
 	assert( y >= 0 );
 	assert( y < int( Graphics::ScreenHeight ) );

@@ -24,7 +24,7 @@ Game::Game(MainWindow& wnd)
 	 :
 	 wnd(wnd),
 	 gfx(wnd),
-	 table(5, 5, 2, gfx),
+	 table(10, 10, 2, gfx),
 	 snake1("Adam", Colors::Red),
 	 snake2("Téra", Colors::Green),
 	 isPaused(false)

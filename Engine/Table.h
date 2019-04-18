@@ -31,9 +31,13 @@ private:
 	 int winPointsCount;
 	 Cell** cells; //https://stackoverflow.com/questions/936687/how-do-i-declare-a-2d-array-in-c-using-new
 	 Graphics& gfx;
-	 const int CELL_WIDTH = 20;
+	 const int CELL_WIDTH = 30;
+	 const int CELL_PADDING = 5;
+
 	 Snake* activeSnake;
 	 bool gameEnded = false;
+	 int leftTableCornerX;
+	 int leftTableCornerY;
 private:
 	 Location GetEmptyCell();
 	 void DrawCell(int pX, int pY, Color pColor);

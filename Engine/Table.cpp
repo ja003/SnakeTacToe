@@ -7,7 +7,9 @@ Table::Table(int pWidth, int pHeight, int pWinPointsCount, Graphics& gfx)
 	 gfx(gfx),
 	 width(pWidth),
 	 height(pHeight),
-	 winPointsCount(pWinPointsCount)
+	 winPointsCount(pWinPointsCount),
+	 leftTableCornerX(Graphics::ScreenWidth / 2 - (width * (CELL_WIDTH + CELL_PADDING)) / 2),
+	 leftTableCornerY(Graphics::ScreenHeight / 2 - (height * (CELL_WIDTH + CELL_PADDING)) / 2)
 {
 
 	 cells = new Cell*[pHeight];
@@ -186,7 +188,6 @@ Location Table::GetEmptyCell()
 
 void Table::DrawCell(int pX, int pY, Color pColor)
 {
-
 	 //WTF..how to debug???
 	 /*string msg = "";
 	 msg += "[";
@@ -198,8 +199,15 @@ void Table::DrawCell(int pX, int pY, Color pColor)
 	 //OutputDebugStringA(L"" + msg);
 
 	 //pColor = Colors::Cyan;
-	 const int padding = 5;
-	 gfx.DrawRectDim(pX * (CELL_WIDTH + padding), pY * (CELL_WIDTH + padding), CELL_WIDTH, CELL_WIDTH, pColor);
+	 int targetX = leftTableCornerX + pX * (CELL_WIDTH + CELL_PADDING);
+	 int targetY = leftTableCornerY + pY * (CELL_WIDTH + CELL_PADDING);
+
+	 if(targetX < 0) targetX = 0;
+	 else if(targetX + CELL_WIDTH >= Graphics::ScreenWidth) targetX = Graphics::ScreenWidth - CELL_WIDTH - 1;
+	 if(targetY < 0) targetY = 0;
+	 else if(targetY + CELL_WIDTH >= Graphics::ScreenHeight) targetY = Graphics::ScreenHeight - CELL_WIDTH - 1;
+
+	 gfx.DrawRectDim(targetX, targetY, CELL_WIDTH, CELL_WIDTH, pColor);
 }
 
 bool Table::IsWithinBounds(Location pLocation)
