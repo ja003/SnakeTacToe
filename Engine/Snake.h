@@ -3,18 +3,32 @@
 #include <vector>
 #include "Colors.h"
 #include "Location.h"
+#include "EDirection.h"
 #include <tuple>
 
-using namespace std;
 class Snake
 {
 private:
-	 string name;
+	 std::string name;
 	 Color color;
 	 int segmentCount;
-	 vector<Location> segments;
+	 std::vector<Location> segments;
+	 Snake* oponent;
 public:
-	 Snake(string pName, Color pColor);
+	 Snake(std::string pName, Color pColor);
 	 Color GetColor();
+	 void Move(EDirection pDirection);
+	 Location GetHead();
+	 void SetOponent(Snake* pOponent)
+	 {
+		  oponent = pOponent;
+	 }
+	 Snake* GetOponent()
+	 {
+
+		  return oponent;
+	 }
+	 void Activate(Location pStartPosition);
+	 void Deactivate();
 };
 

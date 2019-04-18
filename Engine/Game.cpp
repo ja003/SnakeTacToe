@@ -18,10 +18,7 @@
  *	You should have received a copy of the GNU General Public License					  *
  *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
  ******************************************************************************************/
-#include "MainWindow.h"
 #include "Game.h"
-#include "Colors.h"
-
 
 Game::Game(MainWindow& wnd)
 	 :
@@ -29,10 +26,13 @@ Game::Game(MainWindow& wnd)
 	 gfx(wnd),
 	 table(5, 5, gfx),
 	 snake1("Adam", Colors::Red),
-	 snake2("Téra", Colors::Green),
-	 activeSnake(&snake1),
-	 keyReleased(true)
-{}
+	 snake2("Téra", Colors::Green)
+{
+	 snake1.SetOponent(&snake2);
+	 snake2.SetOponent(&snake1);
+
+	 table.SetActiveSnake(&snake1);
+}
 
 void Game::Go()
 {
@@ -44,33 +44,40 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	 if(!wnd.kbd.ReadKey().IsPress())
+	 /*if(!wnd.kbd.ReadKey().IsPress())
 	 {
 		  return;
+	 }*/
+	 const float dt = ft.Mark();
+	 gameTime += dt;
+	 timeToNextStep -= dt;
+	 if(timeToNextStep < 0)
+	 {
+		  timeToNextStep = STEP_FREQUENCY;
+		  //step
+		  table.Move();
 	 }
 
 	 if(wnd.kbd.KeyIsPressed(VK_UP))
 	 {
-		  table.MoveSelectedCell(Up);
+		  table.MoveDirection = Up;
 	 }
 	 else if(wnd.kbd.KeyIsPressed(VK_DOWN))
 	 {
-		  table.MoveSelectedCell(Down);
+		  table.MoveDirection = Down;
 	 }
 	 else if(wnd.kbd.KeyIsPressed(VK_LEFT))
 	 {
-		  table.MoveSelectedCell(Left);
+		  table.MoveDirection = Left;
 	 }
 	 else if(wnd.kbd.KeyIsPressed(VK_RIGHT))
 	 {
-		  table.MoveSelectedCell(Right);
+		  table.MoveDirection = Right;
 	 }
 
 	 else if(wnd.kbd.KeyIsPressed(VK_SPACE))
 	 {
-		  table.Set(activeSnake->GetColor());
-		  //swap players
-		  activeSnake = activeSnake == &snake1 ? &snake2 : &snake1;
+		  table.MakeSymbol();
 	 }
 
 	 //if(wnd.kbd.ReadKey().IsRelease)

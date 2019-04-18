@@ -23,6 +23,9 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "FrameTimer.h"
+#include "MainWindow.h"
+#include "Colors.h"
 
 #include "Table.h"
 #include "Snake.h"
@@ -46,10 +49,12 @@ private:
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	FrameTimer ft;
 
 	Table table;
 	Snake snake1;
 	Snake snake2;
-	Snake* activeSnake;
-	bool keyReleased;
+	float gameTime = 0;
+	const float STEP_FREQUENCY = 1;
+	float timeToNextStep = STEP_FREQUENCY;
 };

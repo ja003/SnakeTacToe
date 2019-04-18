@@ -1,5 +1,4 @@
 #pragma once
-using namespace std;
 #include "Colors.h"
 
 
@@ -21,4 +20,8 @@ public:
 	 void Set(EType pType, Color pColor);
 	 Color GetColor();
 	 bool IsObstacle();
+	 bool IsEmpty()
+	 {
+		  return type == Empty;
+	 }
 };
