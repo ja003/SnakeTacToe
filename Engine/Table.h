@@ -20,7 +20,7 @@ private:
 	 Graphics& gfx;
 	 void drawCell(int pX, int pY, Color pColor);
 	 const int CELL_WIDTH = 20;
-	 bool isWithinBounds(int pX, int pY);
+	 bool isWithinBounds(Location pLocation);
 	 //void moveSelectedCellToEmpty();
 	 Snake* activeSnake;
 	 void swapSnakes();
@@ -39,5 +39,5 @@ public:
 	 void Move();
 	 void SetActiveSnake(Snake* pSnake);
 
-	 EDirection MoveDirection = None;
+	 EDirection MoveDirection = Right;
 };

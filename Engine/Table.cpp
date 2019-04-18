@@ -48,9 +48,9 @@ void Table::drawCell(int pX, int pY, Color pColor)
 	 gfx.DrawRectDim(pX * (CELL_WIDTH + padding), pY * (CELL_WIDTH + padding), CELL_WIDTH, CELL_WIDTH, pColor);
 }
 
-bool Table::isWithinBounds(int pX, int pY)
+bool Table::isWithinBounds(Location pLocation)
 {
-	 return pX >= 0 && pX < width && pY >= 0 && pY < height;
+	 return pLocation.x >= 0 && pLocation.x < width && pLocation.y >= 0 && pLocation.y < height;
 }
 
 void Table::swapSnakes()
@@ -90,7 +90,8 @@ void Table::Move()
 
 	 Location locHead = activeSnake->GetHead();
 	 Cell* newSnakeHead = getCell(locHead);
-	 if(newSnakeHead->IsObstacle())
+	 //first check bounds or OOR exception
+	 if(!isWithinBounds(locHead) || newSnakeHead->IsObstacle())
 	 {
 		  swapSnakes();
 		  return;
