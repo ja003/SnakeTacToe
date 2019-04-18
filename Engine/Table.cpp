@@ -44,7 +44,7 @@ void Table::Draw()
 
 void Table::Move()
 {
-	 Location locOldTail = activeSnake->Move(MoveDirection);
+	 Location locOldTail = activeSnake->Move(moveDirection);
 	 Cell* oldSnakeTail = GetCell(locOldTail);
 	 oldSnakeTail->SetEmpty();
 
@@ -82,6 +82,13 @@ void Table::SetActiveSnake(Snake * pSnake)
 	 SetGoodDirection();
 }
 
+//Dont set direction opposite to the last one that snake made
+void Table::SetMoveDirection(EDirection pDirection)
+{
+	 if(!AreOpposites(activeSnake->GetLastMoveDirection(), pDirection))
+		  moveDirection = pDirection;
+}
+
 //PRIVATE
 
 //Set MoveDirection so the next cell is empty.
@@ -94,11 +101,11 @@ void Table::SetGoodDirection()
 	 for(int i = 0; i < 4; i++)
 	 {
 		  //iterate though all 4 directions, skip None (+1), start with current (-1)
-		  dir = EDirection((int(MoveDirection) + i - 1) % 4 + 1);
+		  dir = EDirection((int(moveDirection) + i - 1) % 4 + 1);
 		  Cell* cellInDir = GetCell(headLoc + dir);
 		  if(cellInDir != nullptr && cellInDir->IsEmpty())
 		  {
-				MoveDirection = dir;
+				moveDirection = dir;
 				return;
 		  }
 	 }

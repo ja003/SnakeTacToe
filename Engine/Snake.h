@@ -32,12 +32,16 @@ public:
 	 {
 		  return segmentCount;
 	 }
+	 EDirection GetLastMoveDirection()
+	 {
+		  return lastMoveDirection;
+	 }
 private:
 	 std::string name;
 	 Color color;
 	 int segmentCount;
 	 std::vector<Location> segments;
 	 Snake* oponent;
-
+	 EDirection lastMoveDirection;
 };
 

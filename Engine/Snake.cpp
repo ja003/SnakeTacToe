@@ -14,6 +14,7 @@ Color Snake::GetColor()
 
 Location Snake::Move(EDirection pDirection)
 {
+	 lastMoveDirection = pDirection;
 	 Location next = GetHead() += pDirection;
 	 segments.insert(segments.begin(), next);
 	 Location last = segments.back();

@@ -69,23 +69,22 @@ void Game::UpdateModel()
 	 {
 			return;
 	 }
-
-
+	 
 	 if(wnd.kbd.KeyIsPressed(VK_UP))
 	 {
-		  table.MoveDirection = Up;
+		  table.SetMoveDirection(Up);
 	 }
 	 else if(wnd.kbd.KeyIsPressed(VK_DOWN))
 	 {
-		  table.MoveDirection = Down;
+		  table.SetMoveDirection(Down);
 	 }
 	 else if(wnd.kbd.KeyIsPressed(VK_LEFT))
 	 {
-		  table.MoveDirection = Left;
+		  table.SetMoveDirection(Left);
 	 }
 	 else if(wnd.kbd.KeyIsPressed(VK_RIGHT))
 	 {
-		  table.MoveDirection = Right;
+		  table.SetMoveDirection(Right);
 	 }
 
 	 else if(wnd.kbd.KeyIsPressed(VK_SPACE))

@@ -11,7 +11,6 @@
 class Table
 {
 public:
-	 EDirection MoveDirection = Right;
 public:
 	 Table() = default;
 	 Table(int pWidth, int pHeight, Graphics& gfx);
@@ -20,9 +19,9 @@ public:
 	 void Draw();
 	 void Move();
 	 void SetActiveSnake(Snake* pSnake);
-
-
+	 void SetMoveDirection(EDirection pDirection);
 private:
+	 EDirection moveDirection = Right;
 	 int width;
 	 int height;
 	 Cell** cells; //https://stackoverflow.com/questions/936687/how-do-i-declare-a-2d-array-in-c-using-new
@@ -58,4 +57,19 @@ private:
 		  return count;
 	 }
 	 void SetGoodDirection();
+	 static bool AreOpposites(EDirection pDir1, EDirection pDir2)
+	 {
+		  switch(pDir1)
+		  {
+		  case Up:
+				return pDir2 == Down;
+		  case Right:
+				return pDir2 == Left;
+		  case Down:
+				return pDir2 == Up;
+		  case Left:
+				return pDir2 == Right;
+		  }
+		  return false;
+	 }
 };
