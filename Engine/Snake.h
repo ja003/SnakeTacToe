@@ -17,7 +17,7 @@ private:
 public:
 	 Snake(std::string pName, Color pColor);
 	 Color GetColor();
-	 void Move(EDirection pDirection);
+	 Location Move(EDirection pDirection);
 	 Location GetHead();
 	 void SetOponent(Snake* pOponent)
 	 {

@@ -2,6 +2,7 @@
 
 enum EDirection
 {
+	 None,
 	 Up,
 	 Right,
 	 Down,

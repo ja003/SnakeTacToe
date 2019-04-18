@@ -13,11 +13,13 @@ Color Snake::GetColor()
 	 return color;
 }
 
-void Snake::Move(EDirection pDirection)
+Location Snake::Move(EDirection pDirection)
 {
-	 //check if next is collision -> die
-	 //remove last segment
-	 //add new segment as first	 
+	 Location next = GetHead() += pDirection;
+	 segments.insert(segments.begin(), next);
+	 Location last = segments.back();
+	 segments.pop_back();
+	 return last;
 }
 
 Location Snake::GetHead()

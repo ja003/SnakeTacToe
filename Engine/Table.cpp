@@ -75,8 +75,8 @@ void Table::Draw()
 	 {
 		  for(int x = 0; x < height; x++)
 		  {
-				Cell cell = cells[x][y];
-				Color col = cell.GetColor();
+				Cell* cell = &cells[x][y];
+				Color col = cell->GetColor();
 				drawCell(x, y, col);
 		  }
 	 }
@@ -84,7 +84,18 @@ void Table::Draw()
 
 void Table::Move()
 {
-	 activeSnake->Move(MoveDirection);
+	 Location locOldTail = activeSnake->Move(MoveDirection);
+	 Cell* oldSnakeTail = getCell(locOldTail);
+	 oldSnakeTail->SetEmpty();
+
+	 Location locHead = activeSnake->GetHead();
+	 Cell* newSnakeHead = getCell(locHead);
+	 if(newSnakeHead->IsObstacle())
+	 {
+		  swapSnakes();
+		  return;
+	 }
+	 newSnakeHead->Set(Cell::Snake, activeSnake->GetColor());
 }
 
 void Table::SetActiveSnake(Snake * pSnake)
