@@ -13,7 +13,7 @@ Table::Table(int pWidth, int pHeight, Graphics& gfx)
 }
 
 
-Location Table::getEmptyCell()
+Location Table::GetEmptyCell()
 {
 	 for(int y = 0; y < width; y++)
 	 {
@@ -30,7 +30,7 @@ Location Table::getEmptyCell()
 	 return Location{ 0,0 };
 }
 
-void Table::drawCell(int pX, int pY, Color pColor)
+void Table::DrawCell(int pX, int pY, Color pColor)
 {
 
 	 //WTF..how to debug???
@@ -48,18 +48,18 @@ void Table::drawCell(int pX, int pY, Color pColor)
 	 gfx.DrawRectDim(pX * (CELL_WIDTH + padding), pY * (CELL_WIDTH + padding), CELL_WIDTH, CELL_WIDTH, pColor);
 }
 
-bool Table::isWithinBounds(Location pLocation)
+bool Table::IsWithinBounds(Location pLocation)
 {
 	 return pLocation.x >= 0 && pLocation.x < width && pLocation.y >= 0 && pLocation.y < height;
 }
 
-void Table::swapSnakes()
+void Table::SwapSnakes()
 {
 	 std::vector<Location> snakeSegments = activeSnake->Deactivate();
 	 for(auto s : snakeSegments)
 	 {
-		  if(isWithinBounds(s)) //if snake went outside of borders, its head is OOB -> no need to set empty
-				getCell(s)->SetEmpty();
+		  if(IsWithinBounds(s)) //if snake went outside of borders, its head is OOB -> no need to set empty
+				GetCell(s)->SetEmpty();
 	 }
 
 	 SetActiveSnake(activeSnake->GetOponent());
@@ -71,7 +71,7 @@ void Table::MakeSymbol()
 	 Location snakeHead = activeSnake->GetHead();
 	 cells[snakeHead.x][snakeHead.y].Set(Cell::Snake, activeSnake->GetColor());
 	 activeSnake->IncreaseSegmentCount();
-	 swapSnakes();
+	 SwapSnakes();
 }
 
 
@@ -83,7 +83,7 @@ void Table::Draw()
 		  {
 				Cell* cell = &cells[x][y];
 				Color col = cell->GetColor();
-				drawCell(x, y, col);
+				DrawCell(x, y, col);
 		  }
 	 }
 }
@@ -91,15 +91,15 @@ void Table::Draw()
 void Table::Move()
 {
 	 Location locOldTail = activeSnake->Move(MoveDirection);
-	 Cell* oldSnakeTail = getCell(locOldTail);
+	 Cell* oldSnakeTail = GetCell(locOldTail);
 	 oldSnakeTail->SetEmpty();
 
 	 Location locHead = activeSnake->GetHead();
-	 Cell* newSnakeHead = getCell(locHead);
+	 Cell* newSnakeHead = GetCell(locHead);
 	 //first check bounds or OOR exception
-	 if(!isWithinBounds(locHead) || newSnakeHead->IsObstacle())
+	 if(!IsWithinBounds(locHead) || newSnakeHead->IsObstacle())
 	 {
-		  swapSnakes();
+		  SwapSnakes();
 		  return;
 	 }
 	 newSnakeHead->Set(Cell::Snake, activeSnake->GetColor());
@@ -108,7 +108,7 @@ void Table::Move()
 void Table::SetActiveSnake(Snake * pSnake)
 {
 	 activeSnake = pSnake;
-	 activeSnake->Activate(getEmptyCell());
+	 activeSnake->Activate(GetEmptyCell());
 	 //set head visible in next frame
-	 getCell(activeSnake->GetHead())->Set(Cell::Snake, activeSnake->GetColor());
+	 GetCell(activeSnake->GetHead())->Set(Cell::Snake, activeSnake->GetColor());
 }

@@ -2,6 +2,7 @@
 
 #include <tuple>
 #include <iostream>
+#include <assert.h>
 #include "Cell.h"
 #include "EDirection.h"
 #include "Graphics.h"
@@ -9,23 +10,8 @@
 
 class Table
 {
-private:
-	 int width;
-	 int height;
-	 Cell** cells; //https://stackoverflow.com/questions/936687/how-do-i-declare-a-2d-array-in-c-using-new
-	 //tuple<int, int> selectedCellIndex;
-	 //bool isSelected(int pX, int pY);
-	 //bool setSelectedCell(int pX, int pY);
-	 Location getEmptyCell();
-	 Graphics& gfx;
-	 void drawCell(int pX, int pY, Color pColor);
-	 const int CELL_WIDTH = 20;
-	 bool isWithinBounds(Location pLocation);
-	 //void moveSelectedCellToEmpty();
-	 Snake* activeSnake;
-	 void swapSnakes();
-	 
-
+public:
+	 EDirection MoveDirection = Right;
 public:
 	 Table() = default;
 	 Table(int pWidth, int pHeight, Graphics& gfx);
@@ -35,10 +21,27 @@ public:
 	 void Move();
 	 void SetActiveSnake(Snake* pSnake);
 
-	 EDirection MoveDirection = Right;
 
-	 Cell* getCell(Location pLocation)
+private:
+	 int width;
+	 int height;
+	 Cell** cells; //https://stackoverflow.com/questions/936687/how-do-i-declare-a-2d-array-in-c-using-new
+	 Graphics& gfx;
+	 const int CELL_WIDTH = 20;
+	 Snake* activeSnake;
+
+private:
+	 Location GetEmptyCell();
+	 void DrawCell(int pX, int pY, Color pColor);
+	 bool IsWithinBounds(Location pLocation);
+	 void SwapSnakes();
+	 Cell* GetCell(Location pLocation)
 	 {
+		  assert(pLocation.x >= 0);
+		  assert(pLocation.x < width);
+		  assert(pLocation.y >= 0);
+		  assert(pLocation.y < height);
+
 		  //check!
 		  return &cells[pLocation.x][pLocation.y];
 	 }

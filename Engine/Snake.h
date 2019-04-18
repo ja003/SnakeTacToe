@@ -8,12 +8,6 @@
 
 class Snake
 {
-private:
-	 std::string name;
-	 Color color;
-	 int segmentCount;
-	 std::vector<Location> segments;
-	 Snake* oponent;
 public:
 	 Snake(std::string pName, Color pColor);
 	 Color GetColor();
@@ -34,5 +28,12 @@ public:
 	 {
 		  segmentCount++;
 	 }
+private:
+	 std::string name;
+	 Color color;
+	 int segmentCount;
+	 std::vector<Location> segments;
+	 Snake* oponent;
+
 };
 

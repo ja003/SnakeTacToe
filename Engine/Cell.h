@@ -11,10 +11,6 @@ public:
 		  Symbol,
 		  Snake
 	 };
-
-private:
-	 Color color;
-	 EType type;
 public:
 	 Cell();
 	 void Set(EType pType, Color pColor);
@@ -28,4 +24,9 @@ public:
 	 {
 		  return type == Empty;
 	 }
+
+private:
+	 Color color;
+	 EType type;
+
 };
